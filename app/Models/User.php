@@ -58,12 +58,15 @@ class User extends Authenticatable
     }
     public static function makeUser($attributes)
     {
-        DB::transaction(function () use ($attributes) {
+        $id = DB::transaction(function () use ($attributes) {
             $user = self::create($attributes);
             $wallet = $user->wallets()->create();
             $initial = $wallet->initialBalance()->create(['amount' => $attributes['initial_balance']]);
-            $initial->balanceDetail()->create(['amount' => $initial->amount]);
+            $balance_detail = $wallet->details()->create(['amount' => $initial->amount]);
+            $balance_detail->operation()->save($initial);
             $wallet->recalculateBalance();
+            return $user->id;
         });
+        return $id;
     }
 }

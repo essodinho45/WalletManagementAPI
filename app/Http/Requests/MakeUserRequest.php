@@ -11,7 +11,7 @@ class MakeUserRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,10 @@ class MakeUserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => ['required', 'string'],
+            'email' => ['required', 'email', 'unique:users'],
+            'password' => ['required', 'confirmed'],
+            'initial_balance' => ['required', 'numeric'],
         ];
     }
 }

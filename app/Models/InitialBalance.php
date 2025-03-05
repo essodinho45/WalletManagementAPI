@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
 
 class InitialBalance extends Model
 {
@@ -19,5 +20,9 @@ class InitialBalance extends Model
     public function wallet(): BelongsTo
     {
         return $this->belongsTo(Wallet::class);
+    }
+    public function balanceDetail(): MorphOne
+    {
+        return $this->morphOne(BalanceDetail::class, 'operation');
     }
 }

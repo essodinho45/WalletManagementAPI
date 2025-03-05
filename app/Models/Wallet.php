@@ -41,4 +41,10 @@ class Wallet extends Model
     {
         return $this->hasOne(InitialBalance::class);
     }
+    public function recalculateBalance()
+    {
+        $balance = $this->details()->sum('amount');
+        $this->balance = $balance;
+        $this->save();
+    }
 }

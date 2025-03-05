@@ -6,6 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use DB;
 
 class User extends Authenticatable
 {
@@ -44,5 +45,16 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public static function makeUser($attributes)
+    {
+        DB::transaction(function () use ($attributes) {
+            $user = self::create($attributes);
+            $wallet = $user->wallet()->create();
+            $initial = $wallet->initialBalance()->create(['amount' => $attributes['initial_balance']]);
+            $initial->balanceDetail()->create(['amount' => $initial->amount]);
+            $wallet->recalculateBalance();
+        });
     }
 }

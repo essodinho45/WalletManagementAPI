@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use DB;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class User extends Authenticatable
 {
@@ -46,12 +47,20 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
-
+    /**
+     * Get all of the wallets for the User
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function wallets(): HasMany
+    {
+        return $this->hasMany(Wallet::class);
+    }
     public static function makeUser($attributes)
     {
         DB::transaction(function () use ($attributes) {
             $user = self::create($attributes);
-            $wallet = $user->wallet()->create();
+            $wallet = $user->wallets()->create();
             $initial = $wallet->initialBalance()->create(['amount' => $attributes['initial_balance']]);
             $initial->balanceDetail()->create(['amount' => $initial->amount]);
             $wallet->recalculateBalance();

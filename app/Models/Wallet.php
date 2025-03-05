@@ -47,4 +47,14 @@ class Wallet extends Model
         $this->balance = $balance;
         $this->save();
     }
+    public static function findByCode($code)
+    {
+        return self::firstWhere('code', $code);
+    }
+    protected static function booted(): void
+    {
+        static::creating(function (Wallet $wallet) {
+            $wallet->code = str_pad($wallet->user_id, 5, '0', STR_PAD_LEFT) . '-' . time();
+        });
+    }
 }

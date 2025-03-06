@@ -11,7 +11,7 @@ class StoreTransaction extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,9 @@ class StoreTransaction extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'amount' => ['required', 'numeric'],
+            'from_wallet' => ['required', 'string'],
+            'to_wallet' => ['required', 'string'],
         ];
     }
 }

@@ -13,14 +13,12 @@ class WalletController extends Controller
 {
     public function deposit(StoreWalletOperation $request)
     {
-        $attributes = $request->validated();
-        $wallet = WalletOperation::makeOperation($attributes, 'deposit');
+        $wallet = WalletOperation::makeOperation($request->validated(), 'deposit');
         return new WalletResource($wallet);
     }
     public function withdraw(StoreWalletOperation $request)
     {
-        $attributes = $request->validated();
-        $wallet = WalletOperation::makeOperation($attributes, 'withdrawal');
+        $wallet = WalletOperation::makeOperation($request->validated(), 'withdrawal');
         return new WalletResource($wallet);
     }
 }

@@ -1,0 +1,444 @@
+{
+	"info": {
+		"_postman_id": "09736d48-6093-4893-862b-9890d7c7d9af",
+		"name": "WalletManagementAPI",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "30252174"
+	},
+	"item": [
+		{
+			"name": "createUser",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "name",
+							"value": "John Doe",
+							"type": "text"
+						},
+						{
+							"key": "email",
+							"value": "john.doe2@example.com",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "12345678",
+							"type": "text"
+						},
+						{
+							"key": "password_confirmation",
+							"value": "12345678",
+							"type": "text"
+						},
+						{
+							"key": "initial_balance",
+							"value": "100",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base_url}}users",
+					"host": [
+						"{{base_url}}users"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "createUserValidationError",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "John Doe",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "john.doe@example.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "12345678",
+									"type": "text"
+								},
+								{
+									"key": "password_confirmation",
+									"value": "12345678",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}users",
+							"host": [
+								"{{base_url}}users"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "showUser",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}users/2",
+					"host": [
+						"{{base_url}}users"
+					],
+					"path": [
+						"2"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "showUserWrongID",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}users/x",
+							"host": [
+								"{{base_url}}users"
+							],
+							"path": [
+								"x"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "deposit",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "wallet_code",
+							"value": "00001-1741219606",
+							"type": "text"
+						},
+						{
+							"key": "amount",
+							"value": "1000",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base_url}}wallet/deposit",
+					"host": [
+						"{{base_url}}wallet"
+					],
+					"path": [
+						"deposit"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "depositWrongWalletCode",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "wallet_code",
+									"value": "00001-174121960699",
+									"type": "text"
+								},
+								{
+									"key": "amount",
+									"value": "100",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}wallet/deposit",
+							"host": [
+								"{{base_url}}wallet"
+							],
+							"path": [
+								"deposit"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "withdraw",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "wallet_code",
+							"value": "00001-1741219606",
+							"type": "text"
+						},
+						{
+							"key": "amount",
+							"value": "50",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base_url}}wallet/withdraw",
+					"host": [
+						"{{base_url}}wallet"
+					],
+					"path": [
+						"withdraw"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "withdrawInsufficientFunds",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "wallet_code",
+									"value": "00001-1741219606",
+									"type": "text"
+								},
+								{
+									"key": "amount",
+									"value": "1000",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}wallet/withdraw",
+							"host": [
+								"{{base_url}}wallet"
+							],
+							"path": [
+								"withdraw"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "transfer",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "from_wallet",
+							"value": "00002-1741226395",
+							"type": "text"
+						},
+						{
+							"key": "amount",
+							"value": "50",
+							"type": "text"
+						},
+						{
+							"key": "to_wallet",
+							"value": "00001-1741219606",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{base_url}}transactions/transfer",
+					"host": [
+						"{{base_url}}transactions"
+					],
+					"path": [
+						"transfer"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "transferInsufficientFunds",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "from_wallet",
+									"value": "00001-1741219606",
+									"type": "text"
+								},
+								{
+									"key": "amount",
+									"value": "100000",
+									"type": "text"
+								},
+								{
+									"key": "to_wallet",
+									"value": "00002-1741226395",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}transactions/transfer",
+							"host": [
+								"{{base_url}}transactions"
+							],
+							"path": [
+								"transfer"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "listTransactions",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "{{base_url}}transactions/list/1",
+					"host": [
+						"{{base_url}}transactions"
+					],
+					"path": [
+						"list",
+						"1"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "transferInsufficientFunds",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "from_wallet",
+									"value": "00001-1741219606",
+									"type": "text"
+								},
+								{
+									"key": "amount",
+									"value": "100000",
+									"type": "text"
+								},
+								{
+									"key": "to_wallet",
+									"value": "00002-1741226395",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}transactions/transfer",
+							"host": [
+								"{{base_url}}transactions"
+							],
+							"path": [
+								"transfer"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://walletmanagementapi.test/api/",
+			"type": "string"
+		}
+	]
+}

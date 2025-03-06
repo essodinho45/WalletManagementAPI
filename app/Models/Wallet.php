@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Exceptions\InsufficientFundsException;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -31,6 +32,15 @@ class Wallet extends Model
     {
         return $this->hasMany(BalanceDetail::class);
     }
+    /**
+     * Get all of the operations for the Wallet
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function operations(): HasMany
+    {
+        return $this->hasMany(WalletOperation::class);
+    }
 
     /**
      * Get the initialBalance associated with the Wallet
@@ -49,7 +59,12 @@ class Wallet extends Model
     }
     public static function findByCode($code)
     {
-        return self::firstWhere('code', $code);
+        return self::where('code', $code)->firstOrFail();
+    }
+    public function checkBalance($amount)
+    {
+        if ($amount > $this->balance)
+            throw new InsufficientFundsException();
     }
     protected static function booted(): void
     {

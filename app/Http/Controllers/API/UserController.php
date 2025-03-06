@@ -14,13 +14,8 @@ class UserController extends Controller
 {
     public function create(MakeUserRequest $request)
     {
-        // try {
         $user_id = User::makeUser($request->validated());
         return Response::json(['User created successfully with id: ' . $user_id]);
-        // } catch (Throwable $e) {
-        //     dd($e->getCode());
-        //     return Response::json([$e->getMessage()], $e->getCode());
-        // }
     }
     public function show($id)
     {

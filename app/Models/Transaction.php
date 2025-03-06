@@ -73,7 +73,7 @@ class Transaction extends Model
             ->whereIn('from_wallet', $wallets)
             ->orWhereIn('to_wallet', $wallets)
             ->orderByDesc('created_at')
-            ->get();
+            ->paginate(5);
         return $transactions;
     }
     protected static function booted(): void

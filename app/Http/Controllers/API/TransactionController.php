@@ -15,4 +15,9 @@ class TransactionController extends Controller
         $transaction_id = Transaction::makeTransaction($request->validated());
         return new TransactionResource(Transaction::with('user', 'fromWallet', 'toWallet')->findOrFail($transaction_id));
     }
+    public function list($user_id)
+    {
+        $transactions = Transaction::listUserTransactions($user_id);
+        return TransactionResource::collection($transactions);
+    }
 }

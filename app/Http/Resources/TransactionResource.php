@@ -16,10 +16,10 @@ class TransactionResource extends JsonResource
     {
         return [
             'amount' => $this->amount,
-            'date' => $this->created_at,
+            'date' => $this->created_at->format('Y-m-d H:i:s'),
             'user' => $this->user->name,
-            'from_wallet' => new WalletResource($this->fromWallet),
-            'to_wallet' => new WalletResource($this->toWallet),
+            'from_wallet' => $this->fromWallet->code,
+            'to_wallet' => $this->toWallet->code,
         ];
     }
 }

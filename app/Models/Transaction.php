@@ -65,6 +65,17 @@ class Transaction extends Model
         });
         return $id;
     }
+    public static function listUserTransactions($user_id)
+    {
+        $user = User::findOrFail($user_id);
+        $wallets = $user->wallets->pluck('id');
+        $transactions = Transaction::with(['user', 'fromWallet', 'toWallet'])
+            ->whereIn('from_wallet', $wallets)
+            ->orWhereIn('to_wallet', $wallets)
+            ->orderByDesc('created_at')
+            ->get();
+        return $transactions;
+    }
     protected static function booted(): void
     {
         static::creating(function (Transaction $transaction) {

@@ -12,7 +12,7 @@ use Throwable;
 
 class UserController extends Controller
 {
-    public function createUser(MakeUserRequest $request)
+    public function create(MakeUserRequest $request)
     {
         // try {
         $user_id = User::makeUser($request->validated());

@@ -63,7 +63,7 @@ class User extends Authenticatable
             $wallet = $user->wallets()->create();
             $initial = $wallet->initialBalance()->create(['amount' => $attributes['initial_balance']]);
             $balance_detail = $wallet->details()->create(['amount' => $initial->amount]);
-            $balance_detail->operation()->save($initial);
+            $initial->balanceDetail()->save($balance_detail);
             $wallet->recalculateBalance();
             return $user->id;
         });
